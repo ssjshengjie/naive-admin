@@ -1,16 +1,24 @@
 import { IosSearch } from '@vicons/ionicons4'
+import { Icon } from '@vicons/utils'
+import HeadItem from '../HeadItem'
+import { obtainAppStore } from '@/store/modules/appConfig'
 export const Search = defineComponent({
     name: 'search',
     components: {
-        IosSearch
+        IosSearch,
+        Icon,
+        HeadItem,
     },
     setup() {
+        const store = obtainAppStore()
         const showModal = ref<boolean>(false)
+        const iconStyle = computed(() => store.GET_APP_ICON)
         const onchangeButton = () => {
             showModal.value = true
         }
         return {
             showModal,
+            iconStyle,
             onchangeButton
         }
     },
@@ -18,14 +26,12 @@ export const Search = defineComponent({
         const { onchangeButton } = this
         return (
             <>
-                <nButton
-                    quaternary
-                    circle
-                    onClick={() => onchangeButton()}
-                    style="font-size: 20px;"
-                >
-                    <nIcon><IosSearch /></nIcon>
-                </nButton>
+                {/* @ts-ignore */}
+                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
+                    {{
+                        default: () => { return <Icon><IosSearch /></Icon> },
+                    }}
+                </HeadItem>
                 <nModal v-model:show={this.showModal}>
                     <nCard style="width: 600px;" title="模态框" bordered={false} size="huge">
                         {/* <template v-solts="#"> 噢！ </template>

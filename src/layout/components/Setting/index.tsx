@@ -1,10 +1,20 @@
 import { SettingsOutline } from '@vicons/ionicons5'
+import { Icon } from '@vicons/utils'
+import HeadItem from '../HeadItem'
+import { obtainAppStore } from '@/store/modules/appConfig'
 export const Setting = defineComponent({
     name: 'setting',
-    components: { SettingsOutline },
+    components: {
+        SettingsOutline,
+        Icon,
+        HeadItem,
+    },
     setup() {
+        const store = obtainAppStore()
+        const iconStyle = computed(() => store.GET_APP_ICON)
         const onchangeButton = () => { }
         return {
+            iconStyle,
             onchangeButton
         }
     },
@@ -12,14 +22,12 @@ export const Setting = defineComponent({
         const { onchangeButton } = this
         return (
             <>
-                <nButton
-                    quaternary
-                    circle
-                    onClick={() => onchangeButton()}
-                    style="font-size: 20px;"
-                >
-                    <nIcon><SettingsOutline /></nIcon>
-                </nButton>
+                {/* @ts-ignore */}
+                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
+                    {{
+                        default: () => { return <Icon><SettingsOutline /></Icon> },
+                    }}
+                </HeadItem>
             </>
         )
     }

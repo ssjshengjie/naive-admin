@@ -1,4 +1,3 @@
-
 import HeadCom from "./head"
 export const defaultLayoutContent = defineComponent({
     name:'content',

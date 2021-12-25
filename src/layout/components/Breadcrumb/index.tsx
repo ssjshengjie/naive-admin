@@ -1,19 +1,31 @@
 import { MdCash } from '@vicons/ionicons4'
+import { obtainAppStore } from '@/store/modules/appConfig'
+const breadcrumbStyle = {
+    height: '48px',
+    display: 'flex',
+    alignItems: 'center',
+}
 export const Breadcrumb = defineComponent({
-    name:'breadcrumb',
+    name: 'breadcrumb',
     components: { MdCash },
+    setup() {
+        const store = obtainAppStore()
+        const iconStyle = computed(() => store.GET_APP_ICON)
+        return {
+            iconStyle
+        }
+    },
     render() {
         return (
-            <nBreadcrumb>
-                <n-breadcrumb-item href="#">
-                    <n-icon><md-cash /></n-icon> 北京总行
-                </n-breadcrumb-item>
-                <n-breadcrumb-item href="#">
-                    <n-icon><md-cash /></n-icon> 天津分行
-                </n-breadcrumb-item>
-                <n-breadcrumb-item href="#">
-                    <n-icon><md-cash /></n-icon> 平山道支行
-                </n-breadcrumb-item>
+            <nBreadcrumb style={breadcrumbStyle}>
+                <nBreadcrumbItem href="#">
+                    <n-icon style={{ fontSize: this.iconStyle }}>
+                        <md-cash />
+                    </n-icon>
+                    <span style={{ marginLeft: '5px' }}>
+                        北京总行
+                    </span>
+                </nBreadcrumbItem>
             </nBreadcrumb>
         )
     }

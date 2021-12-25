@@ -1,9 +1,19 @@
 import { FullscreenOutlined, FullscreenExitOutlined } from '@vicons/antd'
+import { Icon } from '@vicons/utils'
+import HeadItem from '../HeadItem'
+import { obtainAppStore } from '@/store/modules/appConfig'
 export const FullScreen = defineComponent({
     name: 'full-screen',
-    components: { FullscreenOutlined, FullscreenExitOutlined },
+    components: {
+        FullscreenOutlined,
+        FullscreenExitOutlined,
+        Icon,
+        HeadItem,
+    },
     setup() {
+        const store = obtainAppStore()
         const isfull = ref<boolean>(false)
+        const iconStyle = computed(() => store.GET_APP_ICON)
         const showfullScreen = () => {
             isfull.value = true;
             const element: any = document.documentElement;
@@ -48,6 +58,7 @@ export const FullScreen = defineComponent({
         };
         return {
             isfull,
+            iconStyle,
             showfullScreen,
             exitFullscreen
         }
@@ -59,14 +70,14 @@ export const FullScreen = defineComponent({
             else return <nIcon><FullscreenExitOutlined /></nIcon>
         }
         return (
-            <nButton
-                quaternary
-                circle
-                onClick={() => isfull ? exitFullscreen() : showfullScreen()}
-                style="font-size: 20px;"
-            >
-                {isScreen()}
-            </nButton>
+            <>
+                {/* @ts-ignore */}
+                <HeadItem onClick={() => isfull ? exitFullscreen() : showfullScreen()} style={{ fontSize: this.iconStyle }}>
+                    {{
+                        default: () => { return <Icon>{isScreen()}</Icon> },
+                    }}
+                </HeadItem>
+            </>
         )
     }
 })

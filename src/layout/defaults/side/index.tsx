@@ -1,13 +1,18 @@
 import Logo from './Logo'
-import {Menu as Menus}  from './menu'
+import { Menu as Menus } from './menu'
+import { obtainAppStore } from '@/store/modules/appConfig'
 export const defaultLayoutSideBar = defineComponent({
-    name:'sided-bar',
+    name: 'sided-bar',
     components: {
         Logo,
         Menus
     },
     setup() {
-
+        const store = obtainAppStore()
+        const Collapsed = computed(() => store.GET_COLLAPSED)
+        return {
+            Collapsed
+        }
     },
     render() {
         // 是否显示Logo
@@ -18,7 +23,8 @@ export const defaultLayoutSideBar = defineComponent({
             <nLayoutSider
                 style={{ height: "100vh" }}
                 bordered
-                show-trigger
+                inverted={true}
+                collapsed={this.Collapsed}
                 collapse-mode="width"
                 collapsed-width={64}
                 width={240}

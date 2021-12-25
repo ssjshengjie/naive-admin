@@ -1,3 +1,11 @@
+import { Suspense } from "vue"
+const Collapsed = defineAsyncComponent(() => import("@/layout/components/Collapsed"))
+const Breadcrumb = defineAsyncComponent(() => import("@/layout/components/Breadcrumb"));
+const Search = defineAsyncComponent(() => import("@/layout/components/Search"));
+const Language = defineAsyncComponent(() => import("@/layout/components/Language"));
+const FullScreen = defineAsyncComponent(() => import("@/layout/components/FullScreen"));
+const Setting = defineAsyncComponent(() => import("@/layout/components/Setting"));
+const User = defineAsyncComponent(() => import("@/layout/components/User"));
 const headStyle = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -11,18 +19,12 @@ const right = {
     display: 'flex',
     alignItems: 'center',
     minWidth: '180px',
-    marginRight:'10px'
+    marginRight: '10px'
 }
-import { Suspense } from "vue"
-const Breadcrumb = defineAsyncComponent(() => import("@/layout/components/Breadcrumb"));
-const Search = defineAsyncComponent(() => import("@/layout/components/Search"));
-const Language = defineAsyncComponent(() => import("@/layout/components/Language"));
-const FullScreen = defineAsyncComponent(() => import("@/layout/components/FullScreen"));
-const Setting = defineAsyncComponent(() => import("@/layout/components/Setting"));
-const User = defineAsyncComponent(() => import("@/layout/components/User"));
 export const HeadCom = defineComponent({
     name: 'content-head',
     components: {
+        Collapsed,
         Breadcrumb,
         Search,
         Language,
@@ -31,12 +33,16 @@ export const HeadCom = defineComponent({
         User
     },
     render() {
-        const component = [
+        const rightComponent = [
             <Search />,
             <Language />,
             <FullScreen />,
             <Setting />,
             <User />
+        ]
+        const leftComponent = [
+            <Collapsed />,
+            <Breadcrumb style={{ marginLeft: '15px' }} />,
         ]
         return (
             <nLayoutHeader
@@ -44,10 +50,19 @@ export const HeadCom = defineComponent({
                 bordered={true}
             >
                 <div class="mint-layout-header-left" style={left}>
-                    <Breadcrumb style={{ marginLeft: '15px' }} />
+                    {leftComponent.map(v => {
+                        return (
+                            < Suspense >
+                                {{
+                                    default: () => v,
+                                    fallback: () => <nSpin size="small" />,
+                                }}
+                            </Suspense>
+                        )
+                    })}
                 </div>
                 <div class="mint-layout-header-right" style={right}>
-                    {component.map(v => {
+                    {rightComponent.map(v => {
                         return (
                             < Suspense >
                                 {{

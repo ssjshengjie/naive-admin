@@ -5,7 +5,7 @@ import {
     WineOutline as WineIcon
 } from '@vicons/ionicons5'
 export const Menu = defineComponent({
-    name:'menus',
+    name: 'menus',
     setup() {
         const renderIcon = (icon: any) => {
             return () => h(NIcon, null, { default: () => h(icon) })
@@ -133,6 +133,7 @@ export const Menu = defineComponent({
     render() {
         return (
             <n-menu
+                inverted={true}
                 collapsed-width={64}
                 collapsed-icon-size={22}
                 options={this.menuOptions}
