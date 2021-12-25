@@ -1,5 +1,6 @@
-import { createApp } from "vue";
 import "vue-global-api";
+import '@/design/common.less'
+import { createApp } from "vue";
 import App from "./App.vue";
 import { router, setupRouter } from "@/router";
 import { setupStore } from "@/store";
