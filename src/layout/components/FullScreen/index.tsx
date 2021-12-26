@@ -2,6 +2,7 @@ import { FullscreenOutlined, FullscreenExitOutlined } from '@vicons/antd'
 import { Icon } from '@vicons/utils'
 import HeadItem from '../HeadItem'
 import { obtainAppStore } from '@/store/modules/appConfig'
+import useFullScreen from '@/hooks/useFullScreen'
 export const FullScreen = defineComponent({
     name: 'full-screen',
     components: {
@@ -14,41 +15,14 @@ export const FullScreen = defineComponent({
         const store = obtainAppStore()
         const isfull = ref<boolean>(false)
         const iconStyle = computed(() => store.GET_APP_ICON)
+        const { beFull, exitFull, isFull } = useFullScreen()
         const showfullScreen = () => {
             isfull.value = true;
-            const element: any = document.documentElement;
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.mozRequestFullScreen) {
-                element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) {
-                element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) {
-                element.msRequestFullscreen();
-            }
+            beFull()
         };
         const exitFullscreen = () => {
             isfull.value = false;
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-        };
-        const isFull = () => {
-            var isFull =
-                document.mozFullScreen ||
-                document.fullScreen ||
-                //谷歌浏览器及Webkit内核浏览器
-                document.webkitIsFullScreen ||
-                document.webkitRequestFullScreen ||
-                document.mozRequestFullScreen ||
-                document.msFullscreenEnabled;
-            if (isFull === undefined) isFull = false;
-            //console.log("isFull："+isFull)
-            return isFull;
+            exitFull()
         };
         window.onresize = function () {
             if (!isFull()) {
@@ -70,14 +44,27 @@ export const FullScreen = defineComponent({
             else return <nIcon><FullscreenExitOutlined /></nIcon>
         }
         return (
-            <>
-                {/* @ts-ignore */}
-                <HeadItem onClick={() => isfull ? exitFullscreen() : showfullScreen()} style={{ fontSize: this.iconStyle }}>
-                    {{
-                        default: () => { return <Icon>{isScreen()}</Icon> },
-                    }}
-                </HeadItem>
-            </>
+            <n-popover trigger="hover">
+                {{
+                    trigger: () => {
+                        return (
+                            <>
+                                {/* @ts-ignore */}
+                                <HeadItem onClick={() => isfull ? exitFullscreen() : showfullScreen()} style={{ fontSize: this.iconStyle }}>
+                                    {{
+                                        default: () => { return <Icon>{isScreen()}</Icon> },
+                                    }}
+                                </HeadItem>
+                            </>
+                        )
+                    },
+                    default: () => {
+                        return (
+                            <span>{this.isfull ? this.$t("i18n.head.exitfullscreen") : this.$t("i18n.head.fullscreen")}</span>
+                        )
+                    }
+                }}
+            </n-popover>
         )
     }
 })

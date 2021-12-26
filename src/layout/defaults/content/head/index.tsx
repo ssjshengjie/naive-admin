@@ -55,7 +55,7 @@ export const HeadCom = defineComponent({
                             < Suspense >
                                 {{
                                     default: () => v,
-                                    fallback: () => <nSpin size="small" />,
+                                    fallback: () => <nSpin size="small" />
                                 }}
                             </Suspense>
                         )
@@ -67,7 +67,7 @@ export const HeadCom = defineComponent({
                             < Suspense >
                                 {{
                                     default: () => v,
-                                    fallback: () => <nSpin size="small" />,
+                                    fallback: () => <nSpin size="small" />
                                 }}
                             </Suspense>
                         )

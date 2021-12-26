@@ -1,13 +1,17 @@
 <template>
-  <nConfigProvider
-    :locale="zhCN"
-    :date-locale="dateZhCN"
+  <NConfigProvider
+    :locale="language"
+    :date-locale="date"
     :theme-overrides="{ common: { fontWeightStrong: '600' } }"
     class="mint-admin"
   >
-    <RouterView />
-  </nConfigProvider>
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </NConfigProvider>
 </template>
 <script lang="ts" setup>
-import { zhCN, dateZhCN } from 'naive-ui'
+import { AppProvider } from "@/components/AppProvider";
+import useLanguage from "./hooks/useLanguage";
+const { language, date } = useLanguage();
 </script>

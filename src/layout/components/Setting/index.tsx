@@ -21,14 +21,28 @@ export const Setting = defineComponent({
     render() {
         const { onchangeButton } = this
         return (
-            <>
-                {/* @ts-ignore */}
-                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
-                    {{
-                        default: () => { return <Icon><SettingsOutline /></Icon> },
-                    }}
-                </HeadItem>
-            </>
+            <n-popover trigger="hover">
+                {{
+                    trigger: () => {
+                        return (
+                            <>
+                                {/* @ts-ignore */}
+                                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
+                                    {{
+                                        default: () => { return <Icon><SettingsOutline /></Icon> },
+                                    }}
+                                </HeadItem>
+                            </>
+                        )
+                    },
+                    default: () => {
+                        return (
+                            <span>{this.$t("i18n.head.setting")}</span>
+                        )
+                    }
+                }}
+            </n-popover>
+
         )
     }
 })

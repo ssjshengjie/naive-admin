@@ -50,12 +50,27 @@ export const Language = defineComponent({
         const { options, changeLanguage } = this
         return (
             <nDropdown options={options} trigger="click" show-arrow={true} on-select={(key: string) => changeLanguage(key)}>
-                {/* @ts-ignore */}
-                <HeadItem style={{ fontSize: this.iconStyle }}>
+                <n-popover trigger="hover">
                     {{
-                        default: () => { return <Icon> <LanguageOutline /></Icon> },
+                        trigger: () => {
+                            return (
+                                <>
+                                    {/* @ts-ignore */}
+                                    <HeadItem style={{ fontSize: this.iconStyle }}>
+                                        {{
+                                            default: () => { return <Icon> <LanguageOutline /></Icon> },
+                                        }}
+                                    </HeadItem>
+                                </>
+                            )
+                        },
+                        default: () => {
+                            return (
+                                <span>{this.$t("i18n.head.language")}</span>
+                            )
+                        }
                     }}
-                </HeadItem>
+                </n-popover>
             </nDropdown >
         )
     }

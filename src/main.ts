@@ -5,12 +5,17 @@ import App from "./App.vue";
 import { router, setupRouter } from "@/router";
 import { setupStore } from "@/store";
 import { setupLibs } from "@/libs";
+import { setupI18n } from '@/i18n'
+import { AppProvider } from '@/components/AppProvider';
 const app = createApp(App);
+const appProvider = createApp(AppProvider);
 async function bootApp() {
-  setupRouter(app);
   setupStore(app);
   setupLibs(app);
-  //setupRouterGuard(router);
-  app.mount("#app");
+  appProvider.mount('#appProvider', true);
+  await setupI18n(app)
+  await setupRouter(app);
+  await router.isReady();
+  app.mount("#app", true);
 }
 void bootApp();

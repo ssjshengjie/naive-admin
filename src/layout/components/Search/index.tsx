@@ -25,22 +25,27 @@ export const Search = defineComponent({
     render() {
         const { onchangeButton } = this
         return (
-            <>
-                {/* @ts-ignore */}
-                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
-                    {{
-                        default: () => { return <Icon><IosSearch /></Icon> },
-                    }}
-                </HeadItem>
-                <nModal v-model:show={this.showModal}>
-                    <nCard style="width: 600px;" title="模态框" bordered={false} size="huge">
-                        {/* <template v-solts="#"> 噢！ </template>
-                        {renderSlot($slots, 'header-extra', {}, () => [this])} */}
-                        内容
-                        {/* <div solt=''> 尾部 </div> */}
-                    </nCard>
-                </nModal>
-            </>
+            <n-popover trigger="hover">
+                {{
+                    trigger: () => {
+                        return (
+                            <>
+                                {/* @ts-ignore */}
+                                <HeadItem onClick={() => onchangeButton()} style={{ fontSize: this.iconStyle }}>
+                                    {{
+                                        default: () => { return <Icon><IosSearch /></Icon> },
+                                    }}
+                                </HeadItem>
+                            </>
+                        )
+                    },
+                    default: () => {
+                        return (
+                            <span>{this.$t("i18n.head.search")}</span>
+                        )
+                    }
+                }}
+            </n-popover>
         )
     }
 })
