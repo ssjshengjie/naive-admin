@@ -16,7 +16,7 @@ export const Language = defineComponent({
     },
     setup() {
         const store = obtainAppStore()
-        const iconStyle = computed(() => store.GET_APP_ICON)
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
         const changeLanguage = (key: string): void => {
             store.SET_LANGUAGE(key)
         }

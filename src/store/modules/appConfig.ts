@@ -1,26 +1,39 @@
 
 import { defineStore } from "pinia";
 import { store } from "@/store";
+import projectSetting from '@/setting/projectSetting'
 export const appStore = defineStore({
     id: "appStore",
     state: () => ({
-        Layout: 'Defaults',
-        AppLanguage: 'en',
-        Collapsed: false,
-        AppICon: '16px'
+        Layout: projectSetting.Layout,
+        Language: projectSetting.Language,
+        Collapsed: projectSetting.menuSetting.collapsed,
+        IconSize: projectSetting.headerSetting.iconSize,
+        MinMenuWidth: projectSetting.menuSetting.minMenuWidth,
+        MenuWidth: projectSetting.menuSetting.menuWidth,
+        Logo: projectSetting.menuSetting.logo
     }),
     getters: {
         GET_LAYOUT(): string {
             return this.Layout;
         },
         GET_LANGUAGE(): string {
-            return this.AppLanguage;
+            return this.Language;
         },
         GET_COLLAPSED(): boolean {
             return this.Collapsed;
         },
-        GET_APP_ICON(): string {
-            return this.AppICon;
+        GET_ICON_SIZE(): string {
+            return this.IconSize;
+        },
+        GET_MIN_MENU_WIDTH(): number {
+            return this.MinMenuWidth;
+        },
+        GET_MENU_WIDTH(): number {
+            return this.MenuWidth;
+        },
+        GET_LOGO(): boolean {
+            return this.Logo
         }
     },
     actions: {
@@ -28,13 +41,22 @@ export const appStore = defineStore({
             this.Layout = layout;
         },
         SET_LANGUAGE(language: string): void {
-            this.AppLanguage = language;
+            this.Language = language;
         },
         SET_COLLAPSED(collapsed: boolean): void {
             this.Collapsed = collapsed
         },
-        SET_APP_ICON(appicon: string): void {
-            this.AppICon = appicon
+        SET_ICON_SIZE(size: string): void {
+            this.IconSize = size
+        },
+        SET_MIN_MENU_WIDTH(width: number): void {
+            this.MinMenuWidth = width;
+        },
+        SET_MENU_WIDTH(width: number): void {
+            this.MenuWidth = width;
+        },
+        SET_LOGO(show: boolean): void {
+            this.Logo = show
         }
     },
 });

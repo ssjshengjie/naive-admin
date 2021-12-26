@@ -12,7 +12,7 @@ export const Search = defineComponent({
     setup() {
         const store = obtainAppStore()
         const showModal = ref<boolean>(false)
-        const iconStyle = computed(() => store.GET_APP_ICON)
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
         const onchangeButton = () => {
             showModal.value = true
         }

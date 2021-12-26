@@ -13,7 +13,7 @@ export const Collapsed = defineComponent({
     setup() {
         const store = obtainAppStore()
         const collapse = computed(() => store.GET_COLLAPSED)
-        const iconStyle = computed(() => store.GET_APP_ICON)
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
         const changeCollapsed = () => {
             store.SET_COLLAPSED(!collapse.value)
         }

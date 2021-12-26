@@ -6,6 +6,7 @@ const Language = defineAsyncComponent(() => import("@/layout/components/Language
 const FullScreen = defineAsyncComponent(() => import("@/layout/components/FullScreen"));
 const Setting = defineAsyncComponent(() => import("@/layout/components/Setting"));
 const User = defineAsyncComponent(() => import("@/layout/components/User"));
+import { obtainAppStore } from '@/store/modules/appConfig'
 const headStyle = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -32,6 +33,13 @@ export const HeadCom = defineComponent({
         Setting,
         User
     },
+    setup() {
+        const store = obtainAppStore()
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
+        return {
+            iconStyle
+        }
+    },
     render() {
         const rightComponent = [
             <Search />,
@@ -55,7 +63,7 @@ export const HeadCom = defineComponent({
                             < Suspense >
                                 {{
                                     default: () => v,
-                                    fallback: () => <nSpin size="small" />
+                                    fallback: () => <nSpin size={this.iconStyle} />
                                 }}
                             </Suspense>
                         )
@@ -67,7 +75,7 @@ export const HeadCom = defineComponent({
                             < Suspense >
                                 {{
                                     default: () => v,
-                                    fallback: () => <nSpin size="small" />
+                                    fallback: () => <nSpin size={this.iconStyle} />
                                 }}
                             </Suspense>
                         )

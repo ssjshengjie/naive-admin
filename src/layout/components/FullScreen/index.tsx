@@ -14,7 +14,7 @@ export const FullScreen = defineComponent({
     setup() {
         const store = obtainAppStore()
         const isfull = ref<boolean>(false)
-        const iconStyle = computed(() => store.GET_APP_ICON)
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
         const { beFull, exitFull, isFull } = useFullScreen()
         const showfullScreen = () => {
             isfull.value = true;

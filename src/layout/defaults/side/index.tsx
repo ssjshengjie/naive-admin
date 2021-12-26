@@ -9,25 +9,35 @@ export const defaultLayoutSideBar = defineComponent({
     },
     setup() {
         const store = obtainAppStore()
-        const Collapsed = computed(() => store.GET_COLLAPSED)
+        const collapsed = computed(() => store.GET_COLLAPSED)
+        const siderWidth = computed(() => store.GET_MENU_WIDTH)
+        const siderMinWidth = computed(() => store.GET_MIN_MENU_WIDTH)
+        const showLogo = computed(() => store.GET_LOGO)
         return {
-            Collapsed
+            store,
+            collapsed,
+            siderWidth,
+            siderMinWidth,
+            showLogo
         }
     },
     render() {
         // 是否显示Logo
         const showLogo = () => {
-            if (true) return <Logo />
+            if (this.showLogo) return <Logo />
         }
         return (
             <nLayoutSider
+                show-trigger="bar"
                 style={{ height: "100vh" }}
-                bordered
-                inverted={true}
-                collapsed={this.Collapsed}
                 collapse-mode="width"
-                collapsed-width={64}
-                width={240}
+                width={this.siderWidth}
+                collapsed-width={this.siderMinWidth}
+                bordered={true}
+                inverted={true}
+                collapsed={this.collapsed}
+                onCollapse={() => this.store.SET_COLLAPSED(true)}
+                onExpand={() => this.store.SET_COLLAPSED(false)}
                 native-scrollbar={false}
             >
                 {showLogo()}

@@ -11,7 +11,7 @@ export const Setting = defineComponent({
     },
     setup() {
         const store = obtainAppStore()
-        const iconStyle = computed(() => store.GET_APP_ICON)
+        const iconStyle = computed(() => store.GET_ICON_SIZE)
         const onchangeButton = () => { }
         return {
             iconStyle,
